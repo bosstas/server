@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatibil" content="ie-edge">
+<link rel="stylesheet" http="/public/css/style.css">
+<title>welcome</title>
+</head>
+<body> 
+<%=text.text%>
+<p><% include ./partials/text %></p>
+<form action="/users/welcome" method="POST">
+<label>Scrieti comentariu!</label><br>
+<textarea rows="10" cols="45" name="text"></textarea><br>
+<button class="button" type="submit">Adaugarea</button>
+</form>
+</body>
+</html>
