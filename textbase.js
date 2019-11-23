@@ -11,10 +11,14 @@ var textJSON = {
   },
   setText: function (texts) {
     return new Promise(function (resolve, reject) {
-      fs.writeFile(__dirname + '/db-text.json', JSON.stringify(texts, null, '\t'), function (err) {
-        if (err) return reject(err)
-        resolve()
-      })
+      fs.writeFile(
+        __dirname + '/db-text.json',
+        JSON.stringify(texts, null, '\t'),
+        function (err) {
+          if (err) return reject(err)
+          resolve()
+        }
+      )
     })
   }
 }

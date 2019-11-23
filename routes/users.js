@@ -16,41 +16,61 @@ router.get('/register', function (req, res) {
 router.post('/register', urlencludedParser, function (req, res) {
   var { name, email, password, password2 } = req.body
   const errors = []
-  if (!name || !email || !password || !password2) { errors.push({ mgs: 'Va rugam,introduceti toate datele!' }) }
-  if (password !== password2) { errors.push({ mgs: 'Parolele introduse nu coincid!' }) }
-  if (password.length < 6 || password2 < 6) { errors.push({ mgs: 'Parola introdusa trebuie sa aiba cel putin de 6 caractere!' }) }
+  if (!name || !email || !password || !password2) {
+    errors.push({ mgs: 'Va rugam,introduceti toate datele!' })
+  }
+  if (password !== password2) {
+    errors.push({ mgs: 'Parolele introduse nu coincid!' })
+  }
+  if (password.length < 6 || password2 < 6) {
+    errors.push({
+      mgs: 'Parola introdusa trebuie sa aiba cel putin de 6 caractere!'
+    })
+  }
   if (errors.length === 0) {
-    database.getUsers().then(function (users) {
-      if (
-        users.filter(function (user) {
-          return (
-            user.name === name ||
-                        user.email === email
-          )
-        }).length
-      ) {
-        errors.push({ msg: 'Utilizatorul deja exista' })
+    database
+      .getUsers()
+      .then(function (users) {
+        if (
+          users.filter(function (user) {
+            return user.name === name || user.email === email
+          }).length
+        ) {
+          errors.push({ msg: 'Utilizatorul deja exista' })
 
-        return res.render('register', {
-          errors,
-          name,
-          email,
-          password,
-          password2
+          return res.render('register', {
+            errors,
+            name,
+            email,
+            password,
+            password2
+          })
+        }
+
+        users.push({
+          name: name,
+          email: email,
+          password: password
         })
-      }
 
-      users.push({
-        name: name,
-        email: email,
-        password: password
+        database
+          .setUsers(users)
+          .then(function () {
+            res.render('welcome', { user: req.body })
+          })
+          .catch(function (err) {
+            errors.push({ msg: err.message })
+
+            res.render('register', {
+              errors,
+              name,
+              email,
+              password,
+              password2
+            })
+          })
       })
-
-      database.setUsers(
-        users
-      ).then(function () {
-        res.render('welcome', { user: req.body })
-      }).catch(function (err) {
+      .catch(function (err) {
         errors.push({ msg: err.message })
 
         res.render('register', {
@@ -61,17 +81,6 @@ router.post('/register', urlencludedParser, function (req, res) {
           password2
         })
       })
-    }).catch(function (err) {
-      errors.push({ msg: err.message })
-
-      res.render('register', {
-        errors,
-        name,
-        email,
-        password,
-        password2
-      })
-    })
   } else {
     res.render('register', {
       errors,
@@ -86,7 +95,9 @@ router.post('/register', urlencludedParser, function (req, res) {
 router.post('/login', urlencludedParser, function (req, res) {
   var { email, password } = req.body
   const errors = []
-  if (!email || !password) { errors.push({ msg: 'Logati-va!' }) }
+  if (!email || !password) {
+    errors.push({ msg: 'Logati-va!' })
+  }
   if (errors.length > 0) {
     res.render('login', {
       errors,
@@ -94,54 +105,68 @@ router.post('/login', urlencludedParser, function (req, res) {
       password
     })
   } else {
-    database.getUsers().then(function (users) {
-      var filteredUsers = users.filter(function (user) {
-        return (
-          user.email === email &&
-                    user.password === password
-        )
+    database
+      .getUsers()
+      .then(function (users) {
+        var filteredUsers = users.filter(function (user) {
+          return user.email === email && user.password === password
+        })
+        if (filteredUsers.length) {
+          res.render('welcome', { user: filteredUsers[0] })
+        } else {
+          errors.push({ msg: 'Nu sunt corecte datele de acces' })
+
+          res.render('login', {
+            errors,
+            email,
+            password
+          })
+        }
       })
-      if (filteredUsers.length) {
-        res.render('welcome', { user: filteredUsers[0] })
-      } else {
-        errors.push({ msg: 'Nu sunt corecte datele de acces' })
+      .catch(function (err) {
+        errors.push({ msg: err.message })
 
         res.render('login', {
           errors,
           email,
           password
         })
-      }
-    }).catch(function (err) {
-      errors.push({ msg: err.message })
-
-      res.render('login', {
-        errors,
-        email,
-        password
       })
-    })
   }
 })
 router.post('/welcome', urlencludedParser, function (req, res) {
   var text = req.body
   const errors = []
-  if (!text) { errors.push({ msg: 'Nu ati introdus textul!' }) }
+  if (!text) {
+    errors.push({ msg: 'Nu ati introdus textul!' })
+  }
   if (errors.length === 0) {
     res.render('welcome', {
       errors,
       text
     })
   } else {
-    textbase.getText().then(function (texts) {
-      texts.push({
-        text: text
+    textbase
+      .getText()
+      .then(function (texts) {
+        texts.push({
+          text: text
+        })
+        textbase
+          .setText(texts)
+          .then(function () {
+            res.render('welcome', { text: req.body })
+          })
+          .catch(function (err) {
+            errors.push({ msg: err.message })
+
+            res.render('welcome', {
+              errors,
+              text
+            })
+          })
       })
-      textbase.setText(
-        texts
-      ).then(function () {
-        res.render('welcome', { text: req.body })
-      }).catch(function (err) {
+      .catch(function (err) {
         errors.push({ msg: err.message })
 
         res.render('welcome', {
@@ -149,14 +174,6 @@ router.post('/welcome', urlencludedParser, function (req, res) {
           text
         })
       })
-    }).catch(function (err) {
-      errors.push({ msg: err.message })
-
-      res.render('welcome', {
-        errors,
-        text
-      })
-    })
   }
 })
 module.exports = router
