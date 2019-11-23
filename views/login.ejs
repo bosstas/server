@@ -2,9 +2,12 @@
 <% include ./partials/messageses %>
 <form action="/users/login" method="POST">
    <p><label for="email">Email:</label>
-   <input type="email" id="email" name="email" placeholder="Email:"></div></p>
+      <input type="email" id="email" name="email" placeholder="Email:"></div>
+   </p>
    <p><label for="password">Introduceti parola:</label>
-   <input type="password" id="password" name="password" placeholder="Introduceti parola:"></div></p>
-   <button  type="submit">Logare</button>
+      <input type="password" id="password" name="password"
+         placeholder="Introduceti parola:"></div>
+   </p>
+   <button type="submit">Logare</button>
 </form>
 <p><a href="/users/register">Registrare</a></p>
