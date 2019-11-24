@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "precommit": "lint-staged",
     "start": "nodemon server.js",
     "format": "prettier-standard --format"
   },
@@ -20,18 +19,22 @@
     "json": "^9.0.6"
   },
   "devDependencies": {
+    "husky": "^3.1.0",
+    "lint-staged": "^9.4.3",
+    "nodemon": "^2.0.1",
     "prettier": "^1.19.1",
     "prettier-standard": "^15.0.1",
-    "standard": "^14.3.1",
-    "nodemon": "^2.0.1",
-    "lint-staged": "^9.4.3"
+    "standard": "^14.3.1"
   },
   "lint-staged": {
-    "linters": {
-      "**/*.{js,json,ejs,html,css}": [
-        "prettier-standard --lint",
-        "git add"
-      ]
+    "**/*.{js,json,ejs,html,css}": [
+      "prettier-standard --format",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
     }
   }
 }

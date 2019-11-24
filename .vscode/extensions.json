@@ -9,7 +9,7 @@
     "eamodio.gitlens",
     "pflannery.vscode-versionlens",
     "digitalbrainstem.javascript-ejs-support",
-    "aodongwu.ejs-snippets",
+    "taodongwu.ejs-snippets",
     "chenxsan.vscode-standardjs"
   ],
   // List of extensions recommended by VS Code that should not be recommended for users of this workspace.

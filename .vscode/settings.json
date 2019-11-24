@@ -3,7 +3,6 @@
   "standard.enable": true,
   "standard.autoFixOnSave": true,
   "standard.run": "onSave",
-  "standard.usePackageJson": true,
   "files.autoSave": "afterDelay",
   "git.alwaysSignOff": true,
   "git.autofetch": true,
