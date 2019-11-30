@@ -2,21 +2,22 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatibil" content="ie-edge">
-    <link rel="stylesheet" http="/public/css/style.css">
-    <title>welcome<% if (typeof user != 'undefined') {%>
-        <%= user.name ? user.name: '' %>
-        <% } %></title>
+    <!-- Pentru a respecta principiul DRY, am mutat blocul de
+    cod care se repetă într-un partial separat, pe care-l vom copia
+     în fiecare template CSS-ul va fi importat tot în el -->
+    <% include ('partials/head_meta') %>
+    <title>welcome</title>
 </head>
 
 <body>
+    <!-- Verifică dacă este definit text, pentru a-l afișa
+    doar în cazul în care acesta există. În caz contrar afișează
+    doar cutia de introducere a textului -->
     <% if (typeof text != 'undefined') {%>
         <%= text.text ? text.text: '' %>
-        <% } %>
-    <p><% include ./partials/text %></p>
-    <form action="/users_welcome/welcome" method="POST">
+    <% } %>
+    <p><% include ('partials/text') %></p>
+    <form action="/users/welcome" method="POST">
         <label>Scrieti comentariu!</label><br>
         <textarea rows="10" cols="45" name="text"></textarea><br>
         <button class="button" type="submit">Adaugarea</button>

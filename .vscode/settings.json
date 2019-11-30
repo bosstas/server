@@ -1,5 +1,4 @@
 {
-  "javascript.validate.enable": false,
   "files.autoSave": "afterDelay",
   "git.alwaysSignOff": true,
   "git.autofetch": true,
