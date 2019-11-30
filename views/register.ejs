@@ -1,4 +1,18 @@
-<h1>Registrare</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatibil" content="ie-edge">
+    <link rel="stylesheet" http="/public/css/style.css">
+    <title>welcome<% if (typeof user != 'undefined') {%>
+        <%= user.name ? user.name: '' %>
+        <% } %></title>
+</head>
+
+<body>
+    <h1>Registrare</h1>
 <% include ./partials/messages %>
 <form action="/users/register" method="POST">
    <p><label for="name">Nume:</label>
@@ -22,3 +36,6 @@
    <button type="submit">Registrarea</button>
 </form>
 <p><a href="/users/login">Logare</a></p>
+</body>
+
+</html>
