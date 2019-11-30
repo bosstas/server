@@ -5,10 +5,8 @@ module.exports = {
     es6: true,
     node: true
   },
-  extends: [
-    'standard'
-  ],
-plugins: ['ejs'],
+  extends: ['standard'],
+  plugins: ['ejs'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly'
@@ -16,6 +14,5 @@ plugins: ['ejs'],
   parserOptions: {
     ecmaVersion: 2018
   },
-  rules: {
-  }
+  rules: {}
 }
