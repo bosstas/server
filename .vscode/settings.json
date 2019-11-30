@@ -1,13 +1,14 @@
 {
   "javascript.validate.enable": false,
-  "standard.enable": true,
-  "standard.autoFixOnSave": true,
-  "standard.run": "onSave",
   "files.autoSave": "afterDelay",
   "git.alwaysSignOff": true,
   "git.autofetch": true,
   "git.autoStash": true,
   "git.enableSmartCommit": true,
   "git.fetchOnPull": true,
-  "git.postCommitCommand": "push"
+  "git.postCommitCommand": "push",
+  "eslint.autoFixOnSave": true,
+  "eslint.lintTask.enable": true,
+  "eslint.quiet": true,
+  "eslint.alwaysShowStatus": true
 }
