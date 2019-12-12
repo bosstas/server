@@ -13,8 +13,10 @@
     <!-- Verifică dacă este definit text, pentru a-l afișa
     doar în cazul în care acesta există. În caz contrar afișează
     doar cutia de introducere a textului -->
-    <% if (typeof text != 'undefined') {%>
-        <%= text.text ? text.text: '' %>
+    <% if (typeof texts != 'undefined') {%>
+        <% texts.forEach(function(text) { %>
+            <%= text.text ? text.text: '' %>
+      <%  }) %>
     <% } %>
     <p><% include ('partials/text') %></p>
     <form action="/users/welcome" method="POST">

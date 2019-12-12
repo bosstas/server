@@ -13,6 +13,13 @@ router.get('/login', function (req, res) {
 router.get('/register', function (req, res) {
   res.render('register')
 })
+router.get('welcome', function (req, res) {
+  //  TODO: Aici trebuie să verifici dacă utilizatorul nu are mesaje deja
+  // salvate în baza de date, și dacă sunt -> să le afișezi pe pagină.
+  // Pentru început, încearcă să afișezi toate mesajele din baza de date.
+
+  res.render('welcome')
+})
 router.post('/register', urlencludedParser, function (req, res) {
   var { name, email, password, password2 } = req.body
   const errors = []
@@ -56,6 +63,9 @@ router.post('/register', urlencludedParser, function (req, res) {
         database
           .setUsers(users)
           .then(function () {
+            // TODO: Aici nu trebuie să faci render,
+            // ci trebuie să redirecționezi la ruta / welcome
+
             res.render('welcome', { user: req.body })
           })
           .catch(function (err) {
@@ -139,39 +149,23 @@ router.post('/welcome', urlencludedParser, function (req, res) {
   const errors = []
   if (!text) {
     errors.push({ msg: 'Nu ati introdus textul!' })
-  }
-  if (errors.length === 0) {
-    res.render('welcome', {
-      errors,
-      text
-    })
   } else {
+    // BUG: Linia asta nu face sens
+    /* 1. Express.js nu oferă așa funcție și nici tu nu ai declarat-o.
+           2. De ce textbase e argument la funcția asta???
+           3. Nu uita natura ASYNC a limbajului. Toate aceste declarații
+           vor fi executate concomitent, fără a aștepta răspunsul. */
     textbase
-      .getText()
+      .setText(text)
       .then(function (texts) {
-        texts.push({
-          text: text
-        })
-        textbase
-          .setText(texts)
-          .then(function () {
-            res.render('welcome', { text: req.body })
-          })
-          .catch(function (err) {
-            errors.push({ msg: err.message })
-
-            res.render('welcome', {
-              errors,
-              text
-            })
-          })
+        return res.render('welcome', { texts: texts })
       })
       .catch(function (err) {
         errors.push({ msg: err.message })
 
         res.render('welcome', {
           errors,
-          text
+          text: [text]
         })
       })
   }
