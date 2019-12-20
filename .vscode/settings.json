@@ -9,5 +9,9 @@
   "eslint.autoFixOnSave": true,
   "eslint.lintTask.enable": true,
   "eslint.quiet": true,
-  "eslint.alwaysShowStatus": true
+  "eslint.alwaysShowStatus": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.fixAll.eslint": true
+  }
 }

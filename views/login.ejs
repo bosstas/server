@@ -1,8 +1,8 @@
 <head>
-   <% include ('partials/head_meta') %>
+   <%- include ('partials/head_meta'); %>
 </head>
 <h1>Logare</h1>
-<% include ('partials/messages') %>
+<%- include ('partials/messages'); %>
 <form action="/users/login" method="POST">
    <p><label for="email">Email:</label>
       <input type="email" id="email" name="email" placeholder="Email:"></div>
