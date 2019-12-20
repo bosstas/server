@@ -7,7 +7,6 @@ const getText = function () {
   return new Promise(function (resolve, reject) {
     fs.readFile(textDbPath, 'utf8', function (err, content) {
       if (err) return reject(err)
-
       resolve(JSON.parse(content))
     })
   })

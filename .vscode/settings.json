@@ -6,12 +6,13 @@
   "git.enableSmartCommit": true,
   "git.fetchOnPull": true,
   "git.postCommitCommand": "push",
-  "eslint.autoFixOnSave": true,
   "eslint.lintTask.enable": true,
   "eslint.quiet": true,
   "eslint.alwaysShowStatus": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": true,
     "source.fixAll.eslint": true
-  }
+  },
+  "jshint.enable": false,
+  "jshint.lintHTML": true
 }

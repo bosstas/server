@@ -11,17 +11,19 @@ router.get('/login', function (req, res) {
   res.render('login')
 })
 router.get('/register', function (req, res) {
-  res.render('register')
+  return res.render('register')
 })
-router.get('welcome', function (req, res) {
+router.get('/welcome', function (req, res) {
   //  TODO: Aici trebuie să verifici dacă utilizatorul nu are mesaje deja
   // salvate în baza de date, și dacă sunt -> să le afișezi pe pagină.
   // Pentru început, încearcă să afișezi toate mesajele din baza de date.
-
-  res.render('welcome')
+  return textbase
+    .getText()
+    .then(texts => res.render('welcome', { texts: texts }))
+    .catch(error => res.render('welcome', { erros: [error] }))
 })
 router.post('/register', urlencludedParser, function (req, res) {
-  var { name, email, password, password2 } = req.body
+  const { name, email, password, password2 } = req.body
   const errors = []
   if (!name || !email || !password || !password2) {
     errors.push({ mgs: 'Va rugam,introduceti toate datele!' })
@@ -66,7 +68,7 @@ router.post('/register', urlencludedParser, function (req, res) {
             // TODO: Aici nu trebuie să faci render,
             // ci trebuie să redirecționezi la ruta / welcome
 
-            res.render('welcome', { user: req.body })
+            res.redirect('/users/welcome')
           })
           .catch(function (err) {
             errors.push({ msg: err.message })
@@ -122,7 +124,7 @@ router.post('/login', urlencludedParser, function (req, res) {
           return user.email === email && user.password === password
         })
         if (filteredUsers.length) {
-          res.render('welcome', { user: filteredUsers[0] })
+          res.redirect('/users/welcome')
         } else {
           errors.push({ msg: 'Nu sunt corecte datele de acces' })
 
